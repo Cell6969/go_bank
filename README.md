@@ -39,3 +39,9 @@ packages:
 ```shell
 sqlc generate
 ```
+
+## Testing Coverage
+for test all go test cover
+```sh
+go test -v -cover ./...
+```
