@@ -54,6 +54,9 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.listTransfersStmt, err = db.PrepareContext(ctx, listTransfers); err != nil {
 		return nil, fmt.Errorf("error preparing query ListTransfers: %w", err)
 	}
+	if q.resetAccountTableStmt, err = db.PrepareContext(ctx, resetAccountTable); err != nil {
+		return nil, fmt.Errorf("error preparing query ResetAccountTable: %w", err)
+	}
 	if q.updateAccountStmt, err = db.PrepareContext(ctx, updateAccount); err != nil {
 		return nil, fmt.Errorf("error preparing query UpdateAccount: %w", err)
 	}
@@ -112,6 +115,11 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing listTransfersStmt: %w", cerr)
 		}
 	}
+	if q.resetAccountTableStmt != nil {
+		if cerr := q.resetAccountTableStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing resetAccountTableStmt: %w", cerr)
+		}
+	}
 	if q.updateAccountStmt != nil {
 		if cerr := q.updateAccountStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing updateAccountStmt: %w", cerr)
@@ -154,35 +162,37 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                 DBTX
-	tx                 *sql.Tx
-	createAccountStmt  *sql.Stmt
-	createEntryStmt    *sql.Stmt
-	createTransferStmt *sql.Stmt
-	deleteAccountStmt  *sql.Stmt
-	getAccountStmt     *sql.Stmt
-	getEntryStmt       *sql.Stmt
-	getTransferStmt    *sql.Stmt
-	listAccountStmt    *sql.Stmt
-	listEntriesStmt    *sql.Stmt
-	listTransfersStmt  *sql.Stmt
-	updateAccountStmt  *sql.Stmt
+	db                    DBTX
+	tx                    *sql.Tx
+	createAccountStmt     *sql.Stmt
+	createEntryStmt       *sql.Stmt
+	createTransferStmt    *sql.Stmt
+	deleteAccountStmt     *sql.Stmt
+	getAccountStmt        *sql.Stmt
+	getEntryStmt          *sql.Stmt
+	getTransferStmt       *sql.Stmt
+	listAccountStmt       *sql.Stmt
+	listEntriesStmt       *sql.Stmt
+	listTransfersStmt     *sql.Stmt
+	resetAccountTableStmt *sql.Stmt
+	updateAccountStmt     *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                 tx,
-		tx:                 tx,
-		createAccountStmt:  q.createAccountStmt,
-		createEntryStmt:    q.createEntryStmt,
-		createTransferStmt: q.createTransferStmt,
-		deleteAccountStmt:  q.deleteAccountStmt,
-		getAccountStmt:     q.getAccountStmt,
-		getEntryStmt:       q.getEntryStmt,
-		getTransferStmt:    q.getTransferStmt,
-		listAccountStmt:    q.listAccountStmt,
-		listEntriesStmt:    q.listEntriesStmt,
-		listTransfersStmt:  q.listTransfersStmt,
-		updateAccountStmt:  q.updateAccountStmt,
+		db:                    tx,
+		tx:                    tx,
+		createAccountStmt:     q.createAccountStmt,
+		createEntryStmt:       q.createEntryStmt,
+		createTransferStmt:    q.createTransferStmt,
+		deleteAccountStmt:     q.deleteAccountStmt,
+		getAccountStmt:        q.getAccountStmt,
+		getEntryStmt:          q.getEntryStmt,
+		getTransferStmt:       q.getTransferStmt,
+		listAccountStmt:       q.listAccountStmt,
+		listEntriesStmt:       q.listEntriesStmt,
+		listTransfersStmt:     q.listTransfersStmt,
+		resetAccountTableStmt: q.resetAccountTableStmt,
+		updateAccountStmt:     q.updateAccountStmt,
 	}
 }
