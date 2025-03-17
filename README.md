@@ -14,3 +14,28 @@ migrate -path db/migration -database "postgresql://root:root@localhost:5432/simp
 ```shell
 migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down
 ```
+
+## SQLC
+1. Initialize
+```shell
+sqlc init
+```
+
+2. Configuration 
+```yaml
+version: "1"
+packages:
+    - name: "db"
+      path: "./db/sqlc"
+      queries: "./db/query/"
+      schema: "./db/migration/"
+      engine: "postgresql"
+      emit_json_tags: true
+      emit_prepared_queries: true
+      emit_interface: false
+      emit_exact_table_names: false
+```
+3. For generate
+```shell
+sqlc generate
+```
