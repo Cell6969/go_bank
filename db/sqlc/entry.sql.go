@@ -93,3 +93,12 @@ func (q *Queries) ListEntries(ctx context.Context, arg ListEntriesParams) ([]Ent
 	}
 	return items, nil
 }
+
+const resetEntryTable = `-- name: ResetEntryTable :exec
+DELETE FROM entries
+`
+
+func (q *Queries) ResetEntryTable(ctx context.Context) error {
+	_, err := q.exec(ctx, q.resetEntryTableStmt, resetEntryTable)
+	return err
+}

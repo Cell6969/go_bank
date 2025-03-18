@@ -106,3 +106,12 @@ func (q *Queries) ListTransfers(ctx context.Context, arg ListTransfersParams) ([
 	}
 	return items, nil
 }
+
+const resetTransferTable = `-- name: ResetTransferTable :exec
+DELETE FROM transfers
+`
+
+func (q *Queries) ResetTransferTable(ctx context.Context) error {
+	_, err := q.exec(ctx, q.resetTransferTableStmt, resetTransferTable)
+	return err
+}
