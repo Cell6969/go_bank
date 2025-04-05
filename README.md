@@ -45,3 +45,9 @@ for test all go test cover
 ```sh
 go test -v -cover ./...
 ```
+
+
+## Run HTTP Server
+```sh
+go run main.go
+```
