@@ -46,6 +46,11 @@ for test all go test cover
 go test -v -cover ./...
 ```
 
+## Initialize Mock
+```sh
+mockgen -destination db/mock/store github.com/Cell6969/go_bank/db/sqlc Store
+```
+
 
 ## Run HTTP Server
 ```sh
