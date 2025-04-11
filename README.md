@@ -8,11 +8,11 @@ migrate create -ext sql -dir db/migration -seq <nama schema>
 ```
 2. Execute migration
 ```shell
-migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up
+migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up <step>
 ```
 3. Rollback migration
 ```shell
-migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down
+migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down <step>
 ```
 
 ## SQLC
