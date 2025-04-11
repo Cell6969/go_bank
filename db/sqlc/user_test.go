@@ -10,10 +10,12 @@ import (
 )
 
 func createRandomUser(t *testing.T) User {
+	hashedPassword, err := util.HashPassword(util.RandomString(8))
+	require.NoError(t, err)
 	ctx := context.Background()
 	arg := CreateUserParams{
 		Username: util.GenerateRandomName(),
-		Password: "secret",
+		Password: hashedPassword,
 		FullName: util.GenerateRandomName(),
 		Email:    util.GenerateRandomEmail(),
 	}
@@ -34,13 +36,16 @@ func createRandomUser(t *testing.T) User {
 
 func TestCreateUser(t *testing.T) {
 	ctx := context.Background()
-	testQueries.ResetUserTable(ctx)
+	resetUsers(ctx)
+
 	createRandomUser(t)
 }
 
 func TestGetUser(t *testing.T) {
 	ctx := context.Background()
-	testQueries.ResetUserTable(ctx)
+
+	// Reset Table first
+	resetUsers(ctx)
 
 	user1 := createRandomUser(t)
 	user2, err := testQueries.GetUser(ctx, user1.Username)
@@ -52,4 +57,11 @@ func TestGetUser(t *testing.T) {
 	require.Equal(t, user1.Email, user2.Email)
 	require.Equal(t, user1.Password, user2.Password)
 	require.WithinDuration(t, user1.CreatedAt, user2.CreatedAt, time.Second)
+}
+
+func resetUsers(ctx context.Context) {
+	testQueries.ResetEntryTable(ctx)
+	testQueries.ResetTransferTable(ctx)
+	testQueries.ResetAccountTable(ctx)
+	testQueries.ResetUserTable(ctx)
 }
