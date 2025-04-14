@@ -27,6 +27,7 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 	}
 
 	server := &Server{
+		config:     config,
 		store:      store,
 		tokenMaker: tokenMaker,
 	}
