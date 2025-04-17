@@ -59,3 +59,15 @@ go run main.go
 ```sh
 docker build -t gobank:latest .
 ```
+
+## Run Container
+for run in development mode:
+```sh
+docker run --name gobank -p 8080:8080 gobank:latest
+```
+
+for run in release mode with same network
+```sh
+docker run --name gobank --network bank-network -e GIN_MODE=release -p 8080:8080 -e DB_SOURCE=postgres://root:root@po
+stgres:5432/simple_bank?sslmode=disable gobank:latest
+```
