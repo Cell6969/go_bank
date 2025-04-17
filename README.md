@@ -50,9 +50,12 @@ go test -v -cover ./...
 ```sh
 mockgen -package mockdb -destination db/mock/store github.com/Cell6969/go_bank/db/sqlc Store
 ```
-
-
 ## Run HTTP Server
 ```sh
 go run main.go
+```
+
+## Build Image
+```sh
+docker build -t gobank:latest .
 ```
