@@ -13,6 +13,9 @@ jobs:
     name: Build Image
     runs-on: ubuntu-latest
     steps:
+    - name: Check out code into Go Module Directory
+      uses: actions/checkout@v2
+
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
