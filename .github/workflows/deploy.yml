@@ -22,13 +22,13 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-southeast-2
-    
+     
     - name: Login to Amazaon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
     
     - name: Load secrets and save to app.env
-      uses: aws secretsmanager get-secret-value --secret-id simple_bank --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
+      run: aws secretsmanager get-secret-value --secret-id simple_bank --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > app.env
     
     - name: Build, tag, and push image to Amazon ECR
       env:
