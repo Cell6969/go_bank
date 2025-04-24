@@ -1,5 +1,8 @@
 # Simple Bank 
 
+## AWS Image 
+238267480358.dkr.ecr.ap-southeast-2.amazonaws.com/simplebank
+
 ## Migration
 
 1. Create Migration File
@@ -71,3 +74,4 @@ for run in release mode with same network
 docker run --name gobank --network bank-network -e GIN_MODE=release -p 8080:8080 -e DB_SOURCE=postgres://root:root@po
 stgres:5432/simple_bank?sslmode=disable gobank:latest
 ```
+
