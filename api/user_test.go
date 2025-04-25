@@ -74,7 +74,6 @@ func TestCreateUser(t *testing.T) {
 					CreateUser(gomock.Any(), EqCreateUserParams(arg, password)).
 					Times(1).
 					Return(user, nil)
-
 			},
 			checkResponse: func(recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusOK, recorder.Code)
