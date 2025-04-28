@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package pb;
+
+import "user.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/Cell6969/go_bank/pb";
+
+message LoginUserRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginUserResponse {
+    User user = 1;
+    string session = 2;
+    string _token = 3;
+    string _refresh_token = 4;
+    google.protobuf.Timestamp token_expired_at = 5;
+    google.protobuf.Timestamp refresh_token_expired_at = 6;
+}
