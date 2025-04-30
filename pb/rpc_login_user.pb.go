@@ -77,7 +77,7 @@ func (x *LoginUserRequest) GetPassword() string {
 type LoginUserResponse struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
 	User                  *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
-	Session               string                 `protobuf:"bytes,2,opt,name=session,proto3" json:"session,omitempty"`
+	SessionId             string                 `protobuf:"bytes,2,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	XToken                string                 `protobuf:"bytes,3,opt,name=_token,json=Token,proto3" json:"_token,omitempty"`
 	XRefreshToken         string                 `protobuf:"bytes,4,opt,name=_refresh_token,json=RefreshToken,proto3" json:"_refresh_token,omitempty"`
 	TokenExpiredAt        *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=token_expired_at,json=tokenExpiredAt,proto3" json:"token_expired_at,omitempty"`
@@ -123,9 +123,9 @@ func (x *LoginUserResponse) GetUser() *User {
 	return nil
 }
 
-func (x *LoginUserResponse) GetSession() string {
+func (x *LoginUserResponse) GetSessionId() string {
 	if x != nil {
-		return x.Session
+		return x.SessionId
 	}
 	return ""
 }
@@ -166,10 +166,11 @@ const file_rpc_login_user_proto_rawDesc = "" +
 	"user.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"J\n" +
 	"\x10LoginUserRequest\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"\xa3\x02\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"\xa8\x02\n" +
 	"\x11LoginUserResponse\x12\x1c\n" +
-	"\x04user\x18\x01 \x01(\v2\b.pb.UserR\x04user\x12\x18\n" +
-	"\asession\x18\x02 \x01(\tR\asession\x12\x15\n" +
+	"\x04user\x18\x01 \x01(\v2\b.pb.UserR\x04user\x12\x1d\n" +
+	"\n" +
+	"session_id\x18\x02 \x01(\tR\tsessionId\x12\x15\n" +
 	"\x06_token\x18\x03 \x01(\tR\x05Token\x12$\n" +
 	"\x0e_refresh_token\x18\x04 \x01(\tR\fRefreshToken\x12D\n" +
 	"\x10token_expired_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\x0etokenExpiredAt\x12S\n" +
