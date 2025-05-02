@@ -9,10 +9,12 @@ import (
 
 	"github.com/Cell6969/go_bank/api"
 	db "github.com/Cell6969/go_bank/db/sqlc"
+	_ "github.com/Cell6969/go_bank/doc/statik"
 	"github.com/Cell6969/go_bank/gapi"
 	"github.com/Cell6969/go_bank/pb"
 	"github.com/Cell6969/go_bank/util"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/rakyll/statik/fs"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -115,8 +117,12 @@ func runGatewayServer(config util.Config, store db.Store) {
 	mux.Handle("/", grpcMux)
 
 	// create swagger handler
-	fs := http.FileServer(http.Dir("./doc/swagger"))
-	mux.Handle("/swagger/", http.StripPrefix("/swagger/", fs))
+	statikFs, err := fs.New()
+	if err != nil {
+		log.Fatal("cannot create static fs")
+	}
+	swaggerHandler := http.StripPrefix("/swagger/", http.FileServer(statikFs))
+	mux.Handle("/swagger/", swaggerHandler)
 
 	// create listener
 	listener, err := net.Listen("tcp", config.HttpServerAddress)
