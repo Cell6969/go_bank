@@ -1,2 +1,4 @@
 # Exclude All txt format file
 /*.txt
+
+/tools
