@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Simple bank API",
-    "version": "1.0",
+    "version": "1.1",
     "contact": {
       "name": "Cell6969",
       "url": "https://github.com/Cell6969",
@@ -23,6 +23,8 @@
   "paths": {
     "/v1/create_user": {
       "post": {
+        "summary": "Create new User",
+        "description": "API for Create User",
         "operationId": "SimpleBank_CreateUser",
         "responses": {
           "200": {
@@ -55,6 +57,8 @@
     },
     "/v1/login_user": {
       "post": {
+        "summary": "Login User",
+        "description": "API for user login",
         "operationId": "SimpleBank_LoginUser",
         "responses": {
           "200": {

@@ -12,11 +12,11 @@ option go_package = "github.com/Cell6969/go_bank/pb";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
         title: "Simple bank API";
-        version: "1.0";
+        version: "1.1";
         contact: {
           name: "Cell6969";
           url: "https://github.com/Cell6969";
-          email: "bossmarinoo@gmail.com";
+          email: "bossmarinoo@gmail.com"; 
         }
     }
 };
@@ -27,11 +27,19 @@ service SimpleBank {
             post: "/v1/create_user"
             body: "*"
         };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "API for Create User"
+            summary: "Create new User"
+        };
     }
     rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {
         option (google.api.http) = {
             post: "/v1/login_user"
             body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "API for user login"
+            summary: "Login User"
         };
     }
 }
