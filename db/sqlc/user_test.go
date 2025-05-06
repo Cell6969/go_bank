@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"testing"
 	"time"
 
@@ -57,6 +58,48 @@ func TestGetUser(t *testing.T) {
 	require.Equal(t, user1.Email, user2.Email)
 	require.Equal(t, user1.Password, user2.Password)
 	require.WithinDuration(t, user1.CreatedAt, user2.CreatedAt, time.Second)
+}
+
+func TestUpdateUserOnlyFullName(t *testing.T) {
+	ctx := context.Background()
+
+	oldUser := createRandomUser(t)
+
+	newFullName := util.GenerateRandomName()
+	updatedUser, err := testQueries.UpdateUser(ctx, UpdateUserParams{
+		Username: oldUser.Username,
+		FullName: sql.NullString{
+			String: newFullName,
+			Valid:  true,
+		},
+	})
+
+	require.NoError(t, err)
+	require.NotEqual(t, oldUser.FullName, updatedUser.FullName)
+	require.Equal(t, oldUser.Username, updatedUser.Username)
+	require.Equal(t, oldUser.Email, updatedUser.Email)
+	require.Equal(t, oldUser.Password, updatedUser.Password)
+}
+
+func TestUpdateUserOnlyEmail(t *testing.T) {
+	ctx := context.Background()
+
+	oldUser := createRandomUser(t)
+
+	newEmail := util.GenerateRandomEmail()
+	updatedUser, err := testQueries.UpdateUser(ctx, UpdateUserParams{
+		Username: oldUser.Username,
+		Email: sql.NullString{
+			String: newEmail,
+			Valid:  true,
+		},
+	})
+
+	require.NoError(t, err)
+	require.NotEqual(t, oldUser.Email, updatedUser.Email)
+	require.Equal(t, oldUser.FullName, updatedUser.FullName)
+	require.Equal(t, oldUser.Username, updatedUser.Username)
+	require.Equal(t, oldUser.Password, updatedUser.Password)
 }
 
 func resetUsers(ctx context.Context) {

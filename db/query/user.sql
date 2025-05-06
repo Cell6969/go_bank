@@ -12,5 +12,16 @@ INSERT INTO users (
 SELECT * FROM users
 WHERE username = $1 LIMIT 1;
 
+-- name: UpdateUser :one 
+UPDATE users 
+SET 
+    password = COALESCE(sqlc.narg(password),password),
+    full_name = COALESCE(sqlc.narg(full_name), full_name), 
+    email = COALESCE(sqlc.narg(email), email)
+WHERE 
+    username = sqlc.arg(username) 
+RETURNING *; 
+
+
 -- name: ResetUserTable :exec
 DELETE FROM users;

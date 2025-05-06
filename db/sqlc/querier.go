@@ -32,6 +32,7 @@ type Querier interface {
 	ResetTransferTable(ctx context.Context) error
 	ResetUserTable(ctx context.Context) error
 	UpdateAccount(ctx context.Context, arg UpdateAccountParams) (Account, error)
+	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
 }
 
 var _ Querier = (*Queries)(nil)
