@@ -52,6 +52,11 @@ for test all go test cover
 go test -v -cover ./...
 ```
 
+for skip some test for better fast
+```sh
+go test -v -cover -short ./...
+```
+
 ## Initialize Mock
 ```sh
 mockgen -package mockdb -destination db/mock/store.go github.com/Cell6969/go_bank/db/sqlc Store
