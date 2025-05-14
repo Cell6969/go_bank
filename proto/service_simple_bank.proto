@@ -6,7 +6,9 @@ import "google/api/annotations.proto";
 import "rpc_create_user.proto";
 import "rpc_login_user.proto";
 import "rpc_update_user.proto";
+import "rpc_verify_email.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+
 
 option go_package = "github.com/Cell6969/go_bank/pb";
 
@@ -53,6 +55,18 @@ service SimpleBank {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             description: "API for update user"
             summary : "Update User"
+        };
+    }
+
+    rpc VerifyEmail (VerifyEmailRequest) returns (VerifyEmailResponse) {
+        option (google.api.http) = {
+            get: "/v1/verify_email"
+
+        };
+
+         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            description: "Use this API for verify email address"
+            summary : "Verify Email Address"
         };
     }
 }
