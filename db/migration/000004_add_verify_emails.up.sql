@@ -10,4 +10,4 @@ CREATE TABLE "verify_emails" (
 
 ALTER TABLE "verify_emails" ADD FOREIGN KEY ("username") REFERENCES "users" ("username");
 
-ALTER TABLE "users" ADD COLUMN "is_email_verified" bool NOT NULL DEFAULT false;
+ALTER TABLE "users" ADD COLUMN "is_email_verified" bool NOT NULL DEFAULT false; 
