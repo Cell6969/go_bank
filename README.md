@@ -60,6 +60,7 @@ go test -v -cover -short ./...
 ## Initialize Mock
 ```sh
 mockgen -package mockdb -destination db/mock/store.go github.com/Cell6969/go_bank/db/sqlc Store
+mockgen -package mockwk -destination worker/mock/distributor.go github.com/Cell6969/go_bank/worker TaskDistributor
 ```
 ## Run HTTP Server
 ```sh
